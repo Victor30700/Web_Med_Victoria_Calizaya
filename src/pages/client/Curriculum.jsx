@@ -92,7 +92,27 @@ export default function Curriculum() {
             <p>{cvData.descripcion || "Sin descripción disponible."}</p>
           </section>
 
-          <section className="cv-section">
+          {/* --- NUEVA SECCIÓN: MISIÓN Y VISIÓN --- */}
+          {/* Se renderiza solo si existe misión o visión */}
+          {(cvData.mision || cvData.vision) && (
+            <div className="mision-vision-grid">
+              {cvData.mision && (
+                <div className="mv-card mision pop-in delay-2">
+                  <h3>🚀 Misión</h3>
+                  <p>{cvData.mision}</p>
+                </div>
+              )}
+              {cvData.vision && (
+                <div className="mv-card vision pop-in delay-3">
+                  <h3>👁️ Visión</h3>
+                  <p>{cvData.vision}</p>
+                </div>
+              )}
+            </div>
+          )}
+          {/* -------------------------------------- */}
+
+          <section className="cv-section mt-4">
             <h3>
               <span className="icon">🏥</span> 
               Experiencia y Logros

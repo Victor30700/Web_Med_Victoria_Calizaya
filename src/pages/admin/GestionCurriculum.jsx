@@ -9,7 +9,9 @@ export default function GestionCurriculum() {
     enlace: "",      // Enlace al documento (PDF/CV)
     foto: "",        // Enlace a la foto de perfil
     descripcion: "",
-    experiencia: ""
+    experiencia: "",
+    mision: "",      // Nuevo campo: Misión
+    vision: ""       // Nuevo campo: Visión
   });
   const [loading, setLoading] = useState(true);
 
@@ -134,6 +136,29 @@ export default function GestionCurriculum() {
               rows="4"
               value={curriculum.descripcion || ""}
               onChange={e => setCurriculum({...curriculum, descripcion: e.target.value})}
+              className="textarea-admin"
+            ></textarea>
+          </div>
+
+          {/* NUEVOS CAMPOS: MISIÓN Y VISIÓN */}
+          <div className="form-group">
+            <label>Misión (Opcional):</label>
+            <textarea 
+              rows="3"
+              placeholder="Describe tu misión profesional..."
+              value={curriculum.mision || ""}
+              onChange={e => setCurriculum({...curriculum, mision: e.target.value})}
+              className="textarea-admin"
+            ></textarea>
+          </div>
+
+          <div className="form-group">
+            <label>Visión (Opcional):</label>
+            <textarea 
+              rows="3"
+              placeholder="Describe tu visión a futuro..."
+              value={curriculum.vision || ""}
+              onChange={e => setCurriculum({...curriculum, vision: e.target.value})}
               className="textarea-admin"
             ></textarea>
           </div>

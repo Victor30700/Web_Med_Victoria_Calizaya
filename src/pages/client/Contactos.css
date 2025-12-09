@@ -1,0 +1,93 @@
+.contactos-container {
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 80vh;
+}
+
+.contactos-header h1 {
+  color: #007bff;
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.contactos-header p {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 50px;
+}
+
+.contactos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.contacto-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+  border-top: 5px solid #ccc;
+}
+
+.contacto-card:hover { transform: translateY(-10px); }
+
+.contacto-card.whatsapp { border-color: #25D366; }
+.contacto-card.telefono { border-color: #007bff; }
+.contacto-card.email { border-color: #EA4335; }
+.contacto-card.horario { border-color: #FFC107; }
+
+.contacto-card .icon { font-size: 3rem; margin-bottom: 15px; }
+.contacto-card h3 { color: #333; margin-bottom: 10px; }
+.contacto-card p { color: #666; font-size: 0.95rem; }
+
+.dato-contacto {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1rem;
+  display: block;
+  margin-top: 10px;
+}
+
+.btn-contacto {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+}
+.btn-ws { background-color: #25D366; }
+.btn-ws:hover { background-color: #1ebc57; }
+
+/* Redes Sociales */
+.sociales-section h2 { color: #333; margin-bottom: 20px; }
+.sociales-icons { display: flex; justify-content: center; gap: 20px; }
+.social-icon {
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+.social-icon:hover { transform: scale(1.1); }
+.fb { background: #1877F2; }
+.ig { background: #E4405F; }
+.tk { background: #000000; }
+
+/* Animaciones */
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.slide-up { animation: slideUp 0.8s ease-out forwards; opacity: 0; }
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.loading-contactos { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: #007bff; }

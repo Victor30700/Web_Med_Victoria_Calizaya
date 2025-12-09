@@ -1,21 +1,34 @@
-// ... otros imports ...
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register"; // <--- 1. IMPORTAR REGISTER
 
-// Componentes Cliente
+// ... (Resto de tus importaciones de Cliente y Admin siguen igual) ...
+import Home from "./pages/client/Home";
 import Ubicacion from "./pages/client/Ubicacion"; 
 import Ofertas from "./pages/client/Ofertas"; 
-import Investigacion from "./pages/client/Investigacion"; // <--- Import REAL
-const HomeCliente = () => <div style={{padding: '40px', textAlign: 'center'}}><h1>Bienvenido a PerfilMed</h1><p style={{fontSize: '1.2rem'}}>Su salud, nuestra prioridad.</p></div>;
-
-// Componentes Admin
+import Investigacion from "./pages/client/Investigacion";
 import AdminDashboard from "./pages/admin/AdminDashboard"; 
 import GestionServicios from "./pages/admin/GestionServicios"; 
 import GestionUbicacion from "./pages/admin/GestionUbicacion"; 
 import GestionCitas from "./pages/admin/GestionCitas"; 
-import GestionInvestigacion from "./pages/admin/GestionInvestigacion"; // <--- Import REAL
+import GestionInvestigacion from "./pages/admin/GestionInvestigacion";
 
-// ... resto del código (RutaProtegidaAdmin, RutaPrivada, etc) ...
+// ... (Tus funciones RutaProtegidaAdmin y RutaPrivada siguen igual) ...
+const RutaProtegidaAdmin = ({ children }) => {
+  const { user, rol, loading } = useAuth();
+  if (loading) return <div style={{padding:50, textAlign:'center'}}>Cargando sistema...</div>;
+  if (!user || rol !== 'admin') return <Navigate to="/" />;
+  return children;
+};
+
+const RutaPrivada = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <div style={{padding:50, textAlign:'center'}}>Cargando...</div>;
+  if (!user) return <Navigate to="/login" />;
+  return children;
+};
 
 function App() {
   return (
@@ -24,24 +37,22 @@ function App() {
         <Navbar />
         <div className="main-content">
           <Routes>
-            {/* ... rutas login, home, etc ... */}
+            <Route path="/login" element={<Login />} />
+            
+            {/* 2. AGREGAR LA NUEVA RUTA DE REGISTRO */}
+            <Route path="/register" element={<Register />} />
             
             {/* RUTAS CLIENTE */}
-            <Route path="/" element={<HomeCliente />} />
+            <Route path="/" element={<Home />} />
             <Route path="/ubicacion" element={<Ubicacion />} />
             <Route path="/ofertas" element={<RutaPrivada><Ofertas /></RutaPrivada>} />
-            
-            {/* Aquí usamos el componente REAL */}
             <Route path="/investigacion" element={<Investigacion />} />
-
 
             {/* RUTAS ADMIN */}
             <Route path="/admin" element={<RutaProtegidaAdmin><AdminDashboard /></RutaProtegidaAdmin>} />
             <Route path="/admin/servicios" element={<RutaProtegidaAdmin><GestionServicios /></RutaProtegidaAdmin>} />
             <Route path="/admin/ubicacion" element={<RutaProtegidaAdmin><GestionUbicacion /></RutaProtegidaAdmin>} />
             <Route path="/admin/citas" element={<RutaProtegidaAdmin><GestionCitas /></RutaProtegidaAdmin>} />
-            
-            {/* Aquí usamos el componente REAL */}
             <Route path="/admin/investigacion" element={<RutaProtegidaAdmin><GestionInvestigacion /></RutaProtegidaAdmin>} />
             
             <Route path="*" element={<Navigate to="/" />} />

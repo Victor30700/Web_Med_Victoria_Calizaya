@@ -35,19 +35,25 @@ export default function Ubicacion() {
     fetchUbicacion();
   }, []);
 
-  if (loading) return <div className="loading-map">Cargando mapa...</div>;
+  if (loading) return (
+    <div className="loading-location">
+      <div className="spinner-gold"></div>
+      <p>Cargando mapa...</p>
+    </div>
+  );
 
   return (
-    <div className="ubicacion-container">
-      <div className="location-card"> {/* Tarjeta contenedora para diseño pro */}
-        <header className="location-header">
+    <div className="ubicacion-container fade-in">
+      <div className="location-card-luxury"> 
+        <header className="location-header slide-up">
           <h1>📍 Nuestra Ubicación</h1>
+          <div className="gold-divider-small"></div>
           <p>Visítanos para recibir la mejor atención. Estamos ubicados en una zona accesible.</p>
         </header>
 
         {position ? (
-          <div className="map-content">
-            <div className="map-wrapper">
+          <div className="map-content slide-up delay-1">
+            <div className="map-wrapper-luxury">
               <MapContainer 
                 center={[position.lat, position.lng]} 
                 zoom={16} 
@@ -56,7 +62,7 @@ export default function Ubicacion() {
               >
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {/* Usamos el icono rojo aquí */}
                 <Marker position={[position.lat, position.lng]} icon={redIcon}>
@@ -69,21 +75,21 @@ export default function Ubicacion() {
               </MapContainer>
             </div>
             
-            <div className="map-footer">
+            <div className="map-footer-luxury">
               <p>¿Necesitas indicaciones para llegar?</p>
               <a 
                 // Enlace universal de Google Maps
-                href={`https://www.google.com/maps/search/?api=1&query=${position.lat},${position.lng}`} 
+                href={`http://googleusercontent.com/maps.google.com/?q=${position.lat},${position.lng}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn-google-maps"
+                className="btn-google-maps-luxury"
               >
                 🗺️ Ver ruta en Google Maps
               </a>
             </div>
           </div>
         ) : (
-          <div className="no-map">
+          <div className="no-map-luxury">
             <p>⚠️ La ubicación aún no ha sido registrada por el administrador.</p>
           </div>
         )}

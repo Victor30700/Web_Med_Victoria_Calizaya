@@ -49,20 +49,17 @@ export default function Ofertas() {
     cargarDatos();
   }, []);
 
-  // 2. ESCUCHAR CITAS DEL USUARIO EN TIEMPO REAL (CORREGIDO)
+  // 2. ESCUCHAR CITAS DEL USUARIO EN TIEMPO REAL
   useEffect(() => {
-    // Si no hay usuario, limpiamos las citas y no hacemos consulta
     if (!user) {
       setMisCitas([]);
       return;
     }
 
-    // IMPORTANTE: Esta consulta requiere un Índice Compuesto en Firestore
-    // Si no ves datos, abre la consola (F12) y busca el enlace de error de Firebase.
     const q = query(
       collection(db, "citas"), 
-      where("userId", "==", user.uid), // FILTRO EXACTO POR USUARIO
-      orderBy("creadoEn", "desc")      // ORDENAMIENTO POR FECHA
+      where("userId", "==", user.uid),
+      orderBy("creadoEn", "desc")
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -70,7 +67,6 @@ export default function Ofertas() {
       setMisCitas(citasData);
     }, (error) => {
       console.error("⚠️ Error obteniendo citas:", error);
-      // Si el error es 'failed-precondition', es falta de índice.
       if (error.code === 'failed-precondition') {
           console.warn("FALTA ÍNDICE: Copia el link de arriba en tu navegador para crearlo.");
       }
@@ -96,7 +92,7 @@ export default function Ofertas() {
         icon: 'warning', 
         title: 'Inicia sesión', 
         text: 'Debes estar registrado para agendar.',
-        confirmButtonColor: '#0ea5e9'
+        confirmButtonColor: '#1a1a1a' // Negro elegante
       }).then(() => navigate("/login"));
     }
 
@@ -105,7 +101,7 @@ export default function Ofertas() {
         icon: 'warning', 
         title: 'Faltan datos', 
         text: 'Selecciona fecha y hora.',
-        confirmButtonColor: '#f59e0b'
+        confirmButtonColor: '#D4AF37' // Dorado alerta
       });
     }
 
@@ -134,7 +130,7 @@ export default function Ofertas() {
       showCancelButton: true,
       confirmButtonText: 'Sí, agendar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#10b981',
+      confirmButtonColor: '#1a1a1a', // Negro
       cancelButtonColor: '#94a3b8'
     });
 
@@ -144,8 +140,8 @@ export default function Ofertas() {
 
     try {
       await addDoc(collection(db, "citas"), {
-        userId: user.uid,        // ID ÚNICO DEL USUARIO (Clave para el filtro)
-        userEmail: user.email,   // Correo para referencia visual
+        userId: user.uid,
+        userEmail: user.email,
         servicio: cita.servicioNombre,
         fecha: cita.fecha,
         hora: cita.hora,
@@ -161,7 +157,6 @@ export default function Ofertas() {
         showConfirmButton: false
       });
 
-      // Limpiar formulario
       setCita({ fecha: "", hora: "", servicioId: "", servicioNombre: "" }); 
 
     } catch (error) {
@@ -172,7 +167,6 @@ export default function Ofertas() {
     }
   };
 
-  // Helpers visuales
   const getStatusLabel = (estado) => {
     if (estado === 'confirmada') return 'Confirmada';
     if (estado === 'cancelada') return 'Cancelada';
@@ -187,7 +181,7 @@ export default function Ofertas() {
 
   if (loading) return (
     <div className="loading-container">
-      <div className="spinner"></div>
+      <div className="spinner-gold"></div>
       <p>Cargando servicios médicos...</p>
     </div>
   );
@@ -196,18 +190,19 @@ export default function Ofertas() {
     <div className="ofertas-container fade-in">
       <header className="ofertas-header slide-up">
         <h1>Agenda tu Salud</h1>
+        <div className="gold-divider-small"></div>
         <p>Selecciona un servicio profesional y reserva tu horario ideal.</p>
       </header>
 
       <div ref={formRef}></div>
 
-      {/* FORMULARIO FLOTANTE */}
+      {/* FORMULARIO FLOTANTE (Diseño Luxury) */}
       {cita.servicioId && (
         <div className="reserva-wrapper pop-in">
-          <div className="reserva-card">
-            <div className="reserva-header">
+          <div className="reserva-card-luxury">
+            <div className="reserva-header-luxury">
               <h3>Completar Reserva</h3>
-              <span className="reserva-servicio">{cita.servicioNombre}</span>
+              <span className="reserva-servicio-gold">{cita.servicioNombre}</span>
             </div>
             
             <form onSubmit={reservarCita} className="reserva-form">
@@ -220,6 +215,7 @@ export default function Ofertas() {
                     min={new Date().toISOString().split('T')[0]} 
                     value={cita.fecha} 
                     onChange={e => setCita({...cita, fecha: e.target.value})} 
+                    className="input-luxury"
                   />
                 </div>
                 <div className="form-group">
@@ -229,15 +225,16 @@ export default function Ofertas() {
                     required 
                     value={cita.hora} 
                     onChange={e => setCita({...cita, hora: e.target.value})} 
+                    className="input-luxury"
                   />
                 </div>
               </div>
 
               <div className="botones-reserva">
-                <button type="button" onClick={() => setCita({ fecha: "", hora: "", servicioId: "", servicioNombre: "" })} className="btn-cancelar" disabled={isSubmitting}>
+                <button type="button" onClick={() => setCita({ fecha: "", hora: "", servicioId: "", servicioNombre: "" })} className="btn-cancelar-luxury" disabled={isSubmitting}>
                   Cancelar
                 </button>
-                <button type="submit" className="btn-confirmar" disabled={isSubmitting}>
+                <button type="submit" className="btn-confirmar-luxury" disabled={isSubmitting}>
                   {isSubmitting ? <span className="spinner-mini"></span> : 'Confirmar Reserva'}
                 </button>
               </div>
@@ -249,24 +246,24 @@ export default function Ofertas() {
       {/* LISTA DE SERVICIOS */}
       <div className="servicios-grid">
         {servicios.map((servicio, index) => (
-          <div key={servicio.id} className="card-servicio slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-            <div className="card-icon-bg">
-              <span className="card-icon">🩺</span>
+          <div key={servicio.id} className="card-servicio-luxury slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+            <div className="card-icon-luxury">
+              <span className="card-icon-gold">🩺</span>
             </div>
             <div className="card-content">
               <h3>{servicio.nombre}</h3>
-              <div className="card-details">
+              <div className="card-details-luxury">
                 <div className="detail-item">
                   <span className="label">Precio</span>
-                  <span className="value precio">{servicio.precio} Bs</span>
+                  <span className="value-gold">{servicio.precio} Bs</span>
                 </div>
                 <div className="detail-item">
                   <span className="label">Duración</span>
-                  <span className="value duracion">{servicio.duracion} min</span>
+                  <span className="value-text">{servicio.duracion} min</span>
                 </div>
               </div>
               <button 
-                className="btn-agendar"
+                className="btn-agendar-luxury"
                 onClick={() => seleccionarServicio(servicio)}
                 disabled={isSubmitting}
               >
@@ -277,26 +274,26 @@ export default function Ofertas() {
         ))}
       </div>
 
-      {/* --- LISTA DE CITAS DEL USUARIO (Corregida) --- */}
+      {/* --- LISTA DE CITAS DEL USUARIO --- */}
       {user && (
         <div className="mis-citas-section slide-up delay-2">
-          <div className="section-header">
+          <div className="section-header-luxury">
             <h2>📋 Mis Citas Agendadas</h2>
           </div>
 
           {misCitas.length === 0 ? (
-            <div className="no-citas">
-              <div className="icon-empty">📅</div>
+            <div className="no-citas-luxury">
+              <div className="icon-empty-gold">📅</div>
               <p>No tienes citas programadas o no se pudieron cargar.</p>
               <small>Si acabas de registrar una y no aparece, verifica tu conexión.</small>
             </div>
           ) : (
             <div className="citas-user-grid">
               {misCitas.map(c => (
-                <div key={c.id} className={`cita-user-card status-${c.estado}`}>
+                <div key={c.id} className={`cita-user-card-luxury status-${c.estado}`}>
                   <div className="cita-header-card">
                     <span className="cita-fecha">📅 {c.fecha}</span>
-                    <span className={`status-badge badge-${c.estado}`}>
+                    <span className={`status-badge-luxury badge-${c.estado}`}>
                       {getStatusIcon(c.estado)} {getStatusLabel(c.estado)}
                     </span>
                   </div>
@@ -307,14 +304,14 @@ export default function Ofertas() {
                   </div>
                   
                   {c.estado === 'pendiente' && (
-                    <div className="cita-footer-pendiente">
-                      <div className="pulse-dot"></div>
+                    <div className="cita-footer-pendiente-luxury">
+                      <div className="pulse-dot-gold"></div>
                       <span>En espera de confirmación</span>
                     </div>
                   )}
                   
                   {c.estado === 'confirmada' && (
-                    <div className="cita-footer-confirmada">
+                    <div className="cita-footer-confirmada-luxury">
                       <span>¡Todo listo! Te esperamos.</span>
                     </div>
                   )}

@@ -1,191 +1,404 @@
-.admin-container { 
-  padding: 20px; 
-  max-width: 1200px; 
-  margin: 0 auto; 
-  width: 100%;
-  box-sizing: border-box;
-}
-
-h1 { 
-  color: #007bff; 
-  margin-bottom: 10px;
-}
-
-/* Stats Grid Responsive */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Tarjetas flexibles */
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.stat-card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.stat-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Listas de Citas */
-.citas-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.cita-item {
-  background: white;
-  padding: 20px;
-  border-left: 5px solid #007bff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap; /* Importante para móviles */
-  gap: 15px;
-}
-
-/* Ajustes para móviles en Admin */
-@media (max-width: 600px) {
-  .cita-item {
-    flex-direction: column;
-    align-items: flex-start;
+/* =========================================
+   VARIABLES DEL ADMIN DASHBOARD
+   ========================================= */
+   :root {
+    --gold-primary: #c5a059;
+    --gold-hover: #b08d4b;
+    --dark-text: #2c3e50;
+    --light-text: #7f8c8d;
+    --bg-admin: #f4f7f6;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --success-green: #2ecc71;
+    --danger-red: #e74c3c;
+    --warning-yellow: #f1c40f;
   }
   
-  .cita-actions {
+  /* =========================================
+     ESTRUCTURA GENERAL
+     ========================================= */
+  .admin-container { 
+    padding: 30px; 
+    max-width: 1200px; 
+    margin: 0 auto; 
     width: 100%;
+    box-sizing: border-box;
+    background-color: var(--bg-admin);
+    min-height: calc(100vh - 80px); /* Resta altura del navbar */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  
+  .admin-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+  }
+  
+  .admin-header h1 { 
+    color: var(--dark-text); 
+    margin-bottom: 5px;
+    font-size: 2rem;
+    font-family: 'Playfair Display', serif; /* Toque elegante */
+  }
+  
+  .admin-subtitle {
+    color: var(--light-text);
+    font-size: 1rem;
+  }
+  
+  /* Loading State */
+  .loading-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: var(--gold-primary);
+    font-weight: 500;
+  }
+  
+  .spinner-gold {
+    width: 40px; 
+    height: 40px; 
+    border: 3px solid rgba(197, 160, 89, 0.2); 
+    border-top-color: var(--gold-primary); 
+    border-radius: 50%; 
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  }
+  
+  @keyframes spin { to { transform: rotate(360deg); } }
+  
+  /* =========================================
+     GRID DE ESTADÍSTICAS (CARDS)
+     ========================================= */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+  
+  .stat-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border-color: rgba(197, 160, 89, 0.3);
+  }
+  
+  /* Card Highlight (Citas Pendientes) */
+  .stat-card.highlight-card {
+    border-left: 4px solid var(--gold-primary);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+  
+  .icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    background-color: #f0f2f5;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-box.gold {
+    background-color: rgba(197, 160, 89, 0.15);
+    color: var(--gold-primary);
+  }
+  
+  .card-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+    font-weight: 600;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin: 0 0 5px 0;
+    line-height: 1;
+  }
+  
+  .card-title-sm {
+    font-size: 1.2rem;
+    color: var(--dark-text);
+    margin: 0 0 5px 0;
+  }
+  
+  .stat-desc {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  
+  .card-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  
+  .card-link:hover {
+    color: var(--gold-hover);
+    text-decoration: underline;
+  }
+  
+  /* =========================================
+     SECCIÓN DE ACTIVIDAD RECIENTE
+     ========================================= */
+  .citas-recientes-section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+  }
+  
+  .section-header h2 {
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+  }
+  
+  .view-all-link {
+    font-size: 0.85rem;
+    color: var(--gold-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .citas-list-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .cita-reciente-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #eee;
+    transition: background 0.2s;
+  }
+  
+  .cita-reciente-item:hover {
+    background-color: #fff;
+    border-color: #ddd;
+  }
+  
+  .cita-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cita-servicio {
+    font-weight: 600;
+    color: var(--dark-text);
+    font-size: 1rem;
+  }
+  
+  .cita-paciente {
+    font-size: 0.85rem;
+    color: var(--light-text);
+  }
+  
+  .cita-meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+  
+  .cita-fecha {
+    font-size: 0.85rem;
+    color: #666;
     display: flex;
     gap: 10px;
-    margin-top: 10px;
   }
-
-  .cita-actions button {
-    flex: 1;
-    margin-left: 0;
+  
+  /* Badges de Estado */
+  .badge-status {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
-}
-
-/* Soporte Dark Mode Básico */
-@media (prefers-color-scheme: dark) {
-  .stat-card, .cita-item, .cita-reciente-item {
-    background: #2a2a2a;
-    color: #fff;
+  
+  .status-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
   }
-  .stat-card p, .cita-item p {
-    color: #ccc;
+  
+  .status-confirmada {
+    background-color: #d4edda;
+    color: #155724;
   }
-}
-/* Agrega estos estilos a src/pages/admin/Admin.css */
-
-.btn-eliminar {
-    background-color: #dc3545; /* Rojo */
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-eliminar:hover {
-    background-color: #c82333; /* Rojo más oscuro */
-}
-
-/* Ajuste para que los botones estén juntos */
-.cita-actions {
-    display: flex;
-    gap: 5px; /* Espacio entre botones */
-    margin-top: 10px;
-}
-/* --- Estilos para GestionCurriculum.jsx --- */
-
-.card-admin {
+  
+  .status-cancelada {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  /* =========================================
+     ESTILOS COMPARTIDOS FORMULARIOS ADMIN
+     (Para Gestión de CV, Ubicación, etc.)
+     ========================================= */
+  .card-admin {
     background: white;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-}
-
-.form-curriculum { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 20px; 
-}
-
-.input-admin, .textarea-admin { 
-    width: 100%; 
-    padding: 12px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
-    font-size: 1rem; 
-}
-.textarea-admin {
-    resize: vertical;
-}
-
-.form-group label { 
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+    border: 1px solid #eee;
+  }
+  
+  .form-group label { 
     display: block; 
     margin-bottom: 8px; 
-    font-weight: bold; 
-    color: #333; 
-}
-.form-group small { 
-    color: #666; 
-    display: block; 
-    margin-top: 5px; 
+    font-weight: 600; 
+    color: var(--dark-text); 
+    font-size: 0.9rem;
+  }
+  
+  .input-admin, .textarea-admin { 
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    font-size: 1rem; 
+    background-color: #fcfcfc;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+  }
+  
+  .input-admin:focus, .textarea-admin:focus {
+    border-color: var(--gold-primary);
+    outline: none;
+    background-color: white;
+  }
+  
+  .btn-primary-admin {
+    background-color: var(--gold-primary);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .btn-primary-admin:hover {
+    background-color: var(--gold-hover);
+  }
+  
+  .btn-eliminar {
+    background-color: white;
+    color: var(--danger-red);
+    border: 1px solid var(--danger-red);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
     font-size: 0.85rem;
-}
-
-.preview-section {
-    padding: 20px;
-    border-top: 1px solid #eee;
-    text-align: center;
-}
-
-.btn-ver-cv {
-  display: inline-block; 
-  background: #6c757d; /* Gris */
-  color: white; 
-  padding: 10px 20px;
-  text-decoration: none; 
-  border-radius: 5px; 
-  font-weight: 600;
-  transition: background-color 0.2s;
-}
-
-.btn-ver-cv:hover { 
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  
+  .btn-eliminar:hover {
+    background-color: var(--danger-red);
+    color: white;
+  }
+  
+  .btn-ver-cv {
+    display: inline-block; 
+    background: #6c757d; 
+    color: white; 
+    padding: 10px 20px;
+    text-decoration: none; 
+    border-radius: 5px; 
+    font-weight: 600;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-ver-cv:hover { 
     background: #5a6268; 
-}
-/* --- Estilos para la previsualización de la foto en Admin --- */
-.foto-preview-container {
+  }
+  
+  /* Preview de Foto */
+  .foto-preview-container {
     text-align: center;
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 20px;
     background: #f9f9f9;
     border-radius: 8px;
-    border: 1px dashed #ccc;
-}
-
-.foto-preview-container p {
-    margin: 0 0 10px 0;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.foto-preview {
-    width: 150px;
-    height: 150px;
-    object-fit: cover; /* Asegura que la imagen no se deforme */
-    border-radius: 50%; /* Hace la imagen redonda */
-    border: 3px solid #007bff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+    border: 2px dashed #ddd;
+  }
+  
+  .foto-preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--gold-primary);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .cita-reciente-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .cita-meta {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }

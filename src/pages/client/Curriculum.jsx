@@ -39,15 +39,18 @@ export default function Curriculum() {
     fetchCV();
   }, []);
 
-  if (loading) return <div className="loading-cv">
-    <div className="spinner"></div>
-    <p>Cargando perfil profesional...</p>
-  </div>;
+  if (loading) return (
+    <div className="loading-cv">
+      <div className="spinner-gold"></div>
+      <p>Cargando perfil profesional...</p>
+    </div>
+  );
 
   if (!cvData) {
     return (
       <div className="cv-container">
         <div className="cv-card empty fade-in">
+          <div className="empty-icon-gold">⚖️</div>
           <h2>Perfil Profesional</h2>
           <p>La información del profesional aún no está disponible.</p>
         </div>
@@ -58,11 +61,16 @@ export default function Curriculum() {
   return (
     <div className="cv-container fade-in">
       <div className="cv-card">
-        <header className="cv-header">
+        {/* Cabecera elegante negra con borde dorado */}
+        <div className="cv-luxury-header">
+            <div className="gold-line"></div>
+        </div>
+
+        <header className="cv-header-content">
           
-          {/* FOTO DE PERFIL CON DISEÑO PROFESIONAL */}
+          {/* FOTO DE PERFIL CON BORDE DORADO */}
           {cvData.foto && (
-            <div className="profile-image-wrapper pop-in">
+            <div className="profile-gold-wrapper pop-in">
               <img 
                 src={convertirLinkDrive(cvData.foto)} 
                 alt="Dra. Victoria Calizaya" 
@@ -78,46 +86,48 @@ export default function Curriculum() {
 
           <div className="header-text slide-up">
             <h1>Dra. Victoria Calizaya</h1>
+            <span className="gold-divider-small"></span>
             <p className="subtitle">Médico Cirujano - Medicina General</p>
-            <div className="divider"></div>
           </div>
         </header>
 
         <div className="cv-body slide-up delay-1">
-          <section className="cv-section">
-            <h3>
-              <span className="icon">👩‍⚕️</span> 
+          <section className="cv-section bio-section">
+            <h3 className="section-title">
+              <span className="icon-gold">🩺</span> 
               Perfil Profesional
             </h3>
             <p>{cvData.descripcion || "Sin descripción disponible."}</p>
           </section>
 
           {/* --- NUEVA SECCIÓN: MISIÓN Y VISIÓN --- */}
-          {/* Se renderiza solo si existe misión o visión */}
           {(cvData.mision || cvData.vision) && (
             <div className="mision-vision-grid">
               {cvData.mision && (
-                <div className="mv-card mision pop-in delay-2">
-                  <h3>🚀 Misión</h3>
+                <div className="mv-card-luxury pop-in delay-2">
+                  <div className="mv-icon-gold">🎯</div>
+                  <h3>Misión</h3>
                   <p>{cvData.mision}</p>
                 </div>
               )}
               {cvData.vision && (
-                <div className="mv-card vision pop-in delay-3">
-                  <h3>👁️ Visión</h3>
+                <div className="mv-card-luxury pop-in delay-3">
+                  <div className="mv-icon-gold">👁️</div>
+                  <h3>Visión</h3>
                   <p>{cvData.vision}</p>
                 </div>
               )}
             </div>
           )}
-          {/* -------------------------------------- */}
 
-          <section className="cv-section mt-4">
-            <h3>
-              <span className="icon">🏥</span> 
+          <section className="cv-section experience-section mt-4">
+            <h3 className="section-title">
+              <span className="icon-gold">🏥</span> 
               Experiencia y Logros
             </h3>
-            <p>{cvData.experiencia || "Información pendiente de actualizar."}</p>
+            <div className="experience-box-gold">
+                <p>{cvData.experiencia || "Información pendiente de actualizar."}</p>
+            </div>
           </section>
         </div>
 
@@ -127,9 +137,9 @@ export default function Curriculum() {
               href={cvData.enlace} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="btn-download-cv"
+              className="btn-download-gold"
             >
-              📄 Ver Currículum Vitae Completo
+              📥 Descargar Currículum Vitae
             </a>
           </div>
         )}

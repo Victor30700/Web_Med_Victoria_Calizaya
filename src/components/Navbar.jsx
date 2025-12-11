@@ -3,9 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Navbar.css"; 
 
+// Importación de iconos Lucide (versión moderna y ligera)
+import { 
+  Menu, X, LogOut, Home, User, MapPin, 
+  Sparkles, FileText, Phone, LayoutDashboard, 
+  Briefcase, GraduationCap, Stethoscope 
+} from "lucide-react";
+
 export default function Navbar() {
   const { user, rol, logout } = useAuth();
   const navigate = useNavigate();
+  
   // Estado para controlar la visibilidad del menú en móviles
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
@@ -14,64 +22,122 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  // Función para cerrar el menú después de hacer clic en un enlace (útil en móvil)
+  // Función para cerrar el menú al hacer click en un enlace
   const handleLinkClick = () => {
     setIsMenuOpen(false);
   };
 
   return (
     <nav className="navbar">
-      <div className="logo">
-        <Link to={rol === "admin" ? "/admin" : "/"} onClick={handleLinkClick}>
-          PerfilMed Victoria
-        </Link>
+      <div className="navbar-container">
+        {/* LOGOTIPO */}
+        <div className="logo">
+          <Link to={rol === "admin" ? "/admin" : "/"} onClick={handleLinkClick}>
+            <span className="logo-initials">TS</span>
+            <span className="logo-text">DRA. TANYA SHANDAL</span>
+          </Link>
+        </div>
+
+        {/* Botón de Hamburguesa para Móvil */}
+        <button 
+          className="menu-toggle" 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle navigation"
+        >
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
+        {/* ENLACES DE NAVEGACIÓN */}
+        <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
+          
+          {/* --- Menú ADMINISTRADOR --- */}
+          {user && rol === "admin" && (
+            <>
+              <li>
+                <Link to="/admin" onClick={handleLinkClick}>
+                  <LayoutDashboard size={18} /> Panel
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/servicios" onClick={handleLinkClick}>
+                  <Stethoscope size={18} /> Servicios
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/ubicacion" onClick={handleLinkClick}>
+                  <MapPin size={18} /> Ubicación
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/investigacion" onClick={handleLinkClick}>
+                  <FileText size={18} /> Investigación
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/curriculum" onClick={handleLinkClick}>
+                  <GraduationCap size={18} /> CV
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/contactos" onClick={handleLinkClick}>
+                  <Phone size={18} /> Contactos
+                </Link>
+              </li>
+            </>
+          )}
+
+          {/* --- Menú CLIENTES (Público) --- */}
+          {user && rol === "cliente" && (
+            <>
+              <li>
+                <Link to="/" onClick={handleLinkClick}>
+                  <Home size={18} /> Inicio
+                </Link>
+              </li>
+              <li>
+                <Link to="/sobre-mi" onClick={handleLinkClick}>
+                  <User size={18} /> Dra. Tanya
+                </Link>
+              </li>
+              <li>
+                <Link to="/ofertas" onClick={handleLinkClick}>
+                  <Sparkles size={18} /> Procedimientos
+                </Link>
+              </li>
+              <li>
+                <Link to="/investigacion" onClick={handleLinkClick}>
+                  <FileText size={18} /> Investigación
+                </Link>
+              </li>
+              <li>
+                <Link to="/ubicacion" onClick={handleLinkClick}>
+                  <MapPin size={18} /> Ubicación
+                </Link>
+              </li>
+              <li>
+                <Link to="/contactos" onClick={handleLinkClick}>
+                  <Phone size={18} /> Contacto
+                </Link>
+              </li>
+            </>
+          )}
+
+          {/* Botón de Sesión */}
+          {user ? (
+            <li className="logout-item">
+              <button onClick={handleLogout} className="btn-logout">
+                <LogOut size={18} /> <span>Salir</span>
+              </button>
+            </li>
+          ) : (
+            <li>
+              <Link to="/login" onClick={handleLinkClick} className="btn-login">
+                <User size={18} /> Ingresar
+              </Link>
+            </li>
+          )}
+        </ul>
       </div>
-
-      {/* Botón de Hamburguesa para Móvil */}
-      <button 
-        className="menu-toggle" 
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label="Toggle navigation"
-      >
-        {isMenuOpen ? '✕' : '☰'} 
-      </button>
-
-      {/* El menú principal, dinámico para desktop y móvil */}
-      <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
-        
-        {/* Menú para ADMINISTRADOR */}
-        {user && rol === "admin" && (
-          <>
-            <li><Link to="/admin" onClick={handleLinkClick}>Panel Principal</Link></li>
-            <li><Link to="/admin/servicios" onClick={handleLinkClick}>Gestionar Servicios</Link></li>
-            <li><Link to="/admin/ubicacion" onClick={handleLinkClick}>Gestionar Ubicación</Link></li>
-            <li><Link to="/admin/investigacion" onClick={handleLinkClick}>Gestionar Investigación</Link></li>
-            <li><Link to="/admin/citas" onClick={handleLinkClick}>Gestionar Citas</Link></li>
-            <li><Link to="/admin/curriculum" onClick={handleLinkClick}>Gestionar CV</Link></li>
-            {/* ENLACE AGREGADO: */}
-            <li><Link to="/admin/contactos" onClick={handleLinkClick}>Gestionar Contactos</Link></li>
-          </>
-        )}
-
-        {/* Menú para CLIENTES (Usuarios normales) */}
-        {user && rol === "cliente" && (
-          <>
-            <li><Link to="/" onClick={handleLinkClick}>Inicio</Link></li>
-            <li><Link to="/sobre-mi" onClick={handleLinkClick}>Sobre Mí</Link></li>
-            <li><Link to="/ubicacion" onClick={handleLinkClick}>Ubicación</Link></li>
-            <li><Link to="/ofertas" onClick={handleLinkClick}>Oferta de Servicios</Link></li>
-            <li><Link to="/investigacion" onClick={handleLinkClick}>Investigación</Link></li>
-            <li><Link to="/contactos" onClick={handleLinkClick}>Contactos</Link></li>
-          </>
-        )}
-
-        {/* Botón de Cerrar Sesión o Iniciar */}
-        {user ? (
-          <li><button onClick={handleLogout} className="btn-logout">Salir</button></li>
-        ) : (
-          <li><Link to="/login" onClick={handleLinkClick}>Ingresar</Link></li>
-        )}
-      </ul>
     </nav>
   );
 }

@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from "react-leaflet";
 import { db } from "../../firebase/config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import L from "leaflet"; // Importamos Leaflet para el icono
-import Swal from "sweetalert2"; // Usamos SweetAlert para mensajes bonitos
+import L from "leaflet"; 
+import Swal from "sweetalert2"; 
+// Iconos Premium
+import { MapPin, Search, Save, Globe, Link as LinkIcon, Navigation } from "lucide-react";
 import "./GestionUbicacion.css";
 
-// --- CONFIGURACIÓN DEL ICONO ROJO ---
-// Usamos imágenes alojadas en un repositorio público estable de Leaflet
+// --- CONFIGURACIÓN DEL ICONO ROJO (Lógica Intacta) ---
 const redIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -17,9 +18,8 @@ const redIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-// --- COMPONENTES AUXILIARES ---
+// --- COMPONENTES AUXILIARES (Lógica Intacta) ---
 
-// 1. Detectar clics en el mapa para mover el marcador manualmente
 function LocationMarker({ position, setPosition }) {
   useMapEvents({
     click(e) {
@@ -34,12 +34,11 @@ function LocationMarker({ position, setPosition }) {
   );
 }
 
-// 2. Mover la cámara del mapa cuando cambia la posición (Importante para la búsqueda por link)
 function MapUpdater({ center }) {
   const map = useMap();
   useEffect(() => {
     if (center) {
-      map.flyTo(center, 16); // Hace una animación suave hacia la nueva ubicación
+      map.flyTo(center, 16); 
     }
   }, [center, map]);
   return null;
@@ -51,9 +50,9 @@ export default function GestionUbicacion() {
   const defaultCenter = [-21.5355, -64.7296]; // Tarija, Bolivia
   const [position, setPosition] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [googleUrl, setGoogleUrl] = useState(""); // Estado para el input del enlace
+  const [googleUrl, setGoogleUrl] = useState(""); 
 
-  // Cargar ubicación guardada al iniciar
+  // Cargar ubicación guardada
   useEffect(() => {
     const fetchUbicacion = async () => {
       try {
@@ -73,11 +72,10 @@ export default function GestionUbicacion() {
     fetchUbicacion();
   }, []);
 
-  // Función mágica: Extraer coordenadas de un enlace de Google Maps
+  // Lógica de Google Maps
   const buscarDesdeGoogle = () => {
     if (!googleUrl) return Swal.fire('Error', 'Pega un enlace primero', 'warning');
 
-    // Expresión regular para buscar patrones como @-21.53,-64.72 en la URL
     const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
     const match = googleUrl.match(regex);
 
@@ -85,7 +83,7 @@ export default function GestionUbicacion() {
       const lat = parseFloat(match[1]);
       const lng = parseFloat(match[2]);
       
-      setPosition({ lat, lng }); // Actualiza el estado, lo que dispara MapUpdater
+      setPosition({ lat, lng }); 
       Swal.fire({
         icon: 'success',
         title: 'Ubicación encontrada',
@@ -111,55 +109,92 @@ export default function GestionUbicacion() {
         lat: position.lat,
         lng: position.lng
       });
-      Swal.fire('¡Guardado!', 'La ubicación de la oficina ha sido actualizada.', 'success');
+      Swal.fire({
+        title: '¡Guardado!',
+        text: 'La ubicación de la oficina ha sido actualizada.',
+        icon: 'success',
+        confirmButtonColor: '#c5a059'
+      });
     } catch (error) {
       console.error("Error al guardar:", error);
       Swal.fire('Error', 'No se pudo guardar la ubicación.', 'error');
     }
   };
 
-  if (loading) return <div className="loading-admin">Cargando mapa...</div>;
+  if (loading) return (
+    <div className="loading-container">
+      <div className="spinner-gold"></div>
+      <p>Cargando mapa...</p>
+    </div>
+  );
 
   return (
-    <div className="map-admin-container">
-      <h1>📍 Gestión de Ubicación</h1>
-      <p>Define dónde se encuentra tu consultorio para que los pacientes te encuentren.</p>
+    <div className="admin-container">
+      <header className="admin-header fade-in-down">
+        <h1>Gestión de Ubicación</h1>
+        <p>Define dónde se encuentra tu consultorio para que los pacientes te encuentren.</p>
+      </header>
       
       {/* SECCIÓN DE BÚSQUEDA POR GOOGLE MAPS */}
-      <div className="search-box-card">
-        <h3>🔗 Importar desde Google Maps</h3>
-        <p>Copia el enlace de la barra de direcciones de Google Maps y pégalo aquí:</p>
-        <div className="search-input-group">
-          <input 
-            type="text" 
-            placeholder="Ej: https://www.google.com/maps/place/...@ -21.535,-64.729..." 
-            value={googleUrl}
-            onChange={(e) => setGoogleUrl(e.target.value)}
-          />
-          <button onClick={buscarDesdeGoogle} className="btn-search">Buscar</button>
+      <section className="search-box-card fade-in-up delay-1">
+        <div className="card-header-simple">
+          <h3><LinkIcon size={20} className="icon-gold" /> Importar desde Google Maps</h3>
+          <p className="instruction-text">
+            Pega el enlace de la barra de direcciones de Google Maps para localizar automáticamente.
+          </p>
+        </div>
+        
+        <div className="search-input-wrapper">
+          <div className="input-group full-width">
+            <div className="input-icon-container">
+              <Globe size={18} className="input-icon" />
+              <input 
+                type="text" 
+                className="input-admin-search"
+                placeholder="Ej: https://www.google.com/maps/@-21.535,-64.729,15z..." 
+                value={googleUrl}
+                onChange={(e) => setGoogleUrl(e.target.value)}
+              />
+            </div>
+            <button onClick={buscarDesdeGoogle} className="btn-search-gold">
+              <Search size={18} /> Buscar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTENEDOR DEL MAPA */}
+      <div className="map-section fade-in-up delay-2">
+        <div className="map-frame">
+          <MapContainer center={position || defaultCenter} zoom={15} scrollWheelZoom={true} style={{ height: "100%", width: "100%" }}>
+            <TileLayer
+              attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <LocationMarker position={position} setPosition={setPosition} />
+            <MapUpdater center={position} />
+          </MapContainer>
         </div>
       </div>
 
-      <div className="map-wrapper">
-        <MapContainer center={position || defaultCenter} zoom={15} scrollWheelZoom={true} style={{ height: "400px", width: "100%" }}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {/* El marcador rojo */}
-          <LocationMarker position={position} setPosition={setPosition} />
-          {/* Componente invisible que actualiza la vista al buscar */}
-          <MapUpdater center={position} />
-        </MapContainer>
-      </div>
-
-      <div className="coords-info">
-        {position ? (
-          <p>📍 Coordenadas seleccionadas: <strong>{position.lat.toFixed(6)}, {position.lng.toFixed(6)}</strong></p>
-        ) : (
-          <p>Haz clic en el mapa para marcar la ubicación.</p>
-        )}
-        <button onClick={guardarUbicacion} className="btn-save-map">Guardar Ubicación Definitiva</button>
+      {/* BARRA DE ACCIÓN INFERIOR */}
+      <div className="action-bar fade-in-up delay-3">
+        <div className="coords-display">
+          <Navigation size={20} className="icon-nav" />
+          <div className="coords-text">
+            {position ? (
+              <>
+                <span className="label">Coordenadas Actuales:</span>
+                <span className="value">{position.lat.toFixed(6)}, {position.lng.toFixed(6)}</span>
+              </>
+            ) : (
+              <span className="placeholder-text">Haz clic en el mapa para marcar la ubicación.</span>
+            )}
+          </div>
+        </div>
+        <button onClick={guardarUbicacion} className="btn-save-gold">
+          <Save size={18} /> Guardar Ubicación
+        </button>
       </div>
     </div>
   );

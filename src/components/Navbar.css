@@ -1,112 +1,209 @@
+/* =========================================
+   NAVBAR PREMIUM STYLE
+   ========================================= */
+:root {
+  --nav-bg: #1a1a1a;        /* Fondo oscuro elegante */
+  --nav-text: #f4f4f4;      /* Texto claro */
+  --gold-accent: #c5a059;   /* Dorado de la marca */
+  --gold-hover: #b08d4b;    /* Dorado oscuro */
+  --danger-red: #e74c3c;    /* Rojo elegante para salir */
+}
+
 .navbar {
-  background-color: #007bff; /* Color azul primario */
-  color: white;
+  background-color: var(--nav-bg);
+  color: var(--nav-text);
+  position: sticky; /* Se mantiene arriba al hacer scroll */
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Sombra suave */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 80px; /* Altura fija elegante */
+  display: flex;
+  align-items: center;
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* --- LOGOTIPO --- */
 .logo a {
-  color: white;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: bold;
+  gap: 10px;
 }
 
+.logo-initials {
+  background: var(--gold-accent);
+  color: var(--nav-bg);
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 8px;
+  border-radius: 4px; /* Cuadrado con bordes suaves */
+  letter-spacing: 1px;
+}
+
+.logo-text {
+  color: white;
+  font-family: 'Playfair Display', serif; /* Fuente elegante */
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* --- ENLACES DE NAVEGACIÓN (Desktop) --- */
 .nav-links {
   list-style: none;
-  display: flex; /* Horizontal por defecto */
+  display: flex;
   margin: 0;
   padding: 0;
   align-items: center;
-  transition: transform 0.3s ease-out; /* Transición para móvil */
+  gap: 15px;
 }
 
 .nav-links li {
-  margin-left: 25px;
+  position: relative;
 }
 
-.nav-links a, .nav-links button {
-  color: white;
+/* Estilo general de los enlaces */
+.nav-links a, 
+.nav-links button {
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  font-size: 1rem;
-  padding: 8px 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.nav-links a:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-.btn-logout {
-  background-color: #dc3545; /* Rojo para cerrar sesión */
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre icono y texto */
+  font-weight: 500;
+  background: transparent;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+}
+
+/* Hover effect: Texto dorado */
+.nav-links a:hover {
+  color: var(--gold-accent);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Link activo (opcional si usas NavLink) */
+.nav-links a.active {
+  color: var(--gold-accent);
+}
+
+/* --- BOTONES ESPECIALES --- */
+
+/* Botón Login */
+.btn-login {
+  border: 1px solid var(--gold-accent) !important;
+  color: var(--gold-accent) !important;
+  padding: 8px 20px !important;
+  border-radius: 30px !important;
+}
+
+.btn-login:hover {
+  background-color: var(--gold-accent) !important;
+  color: white !important;
+}
+
+/* Botón Logout */
+.btn-logout {
+  color: #ff6b6b !important; /* Rojo suave */
 }
 
 .btn-logout:hover {
-  background-color: #c82333;
+  background-color: rgba(220, 53, 69, 0.1) !important;
+  color: #ff4757 !important;
 }
 
-/* Botón de Hamburguesa - Oculto por defecto en desktop */
+/* --- BOTÓN HAMBURGUESA (Móvil) --- */
 .menu-toggle {
   display: none;
   background: none;
   border: none;
-  color: white;
-  font-size: 1.8rem;
+  color: var(--gold-accent);
   cursor: pointer;
-  z-index: 1001; /* Asegura que esté por encima del menú colapsado */
+  transition: transform 0.3s;
 }
 
-/* --- Media Query para Dispositivos Móviles (pantallas pequeñas) --- */
+.menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN (MÓVIL)
+   ========================================= */
 @media (max-width: 900px) {
   .navbar {
-    padding: 10px 20px;
+    height: 70px;
+    padding: 0;
   }
-  
-  /* Mostrar el botón de hamburguesa */
+
+  .logo-text {
+    font-size: 0.9rem; /* Texto más pequeño en móvil */
+  }
+
+  /* Mostrar el botón de menú */
   .menu-toggle {
     display: block;
   }
 
-  /* Ocultar la lista de enlaces por defecto */
+  /* Menú desplegable móvil */
   .nav-links {
-    display: none; /* Oculto por defecto */
-    flex-direction: column; /* Vertical en móvil */
     position: absolute;
-    top: 60px; /* Debajo de la navbar */
+    top: 70px; /* Justo debajo del navbar */
     left: 0;
     width: 100%;
-    background-color: #007bff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    background-color: var(--nav-bg); /* Fondo oscuro solido */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    max-height: 0; /* Oculto por altura */
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, opacity 0.3s ease;
+    opacity: 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
 
-  /* Clase para mostrar la lista de enlaces cuando el estado está abierto */
+  /* Estado Abierto */
   .nav-links.open {
-    display: flex;
+    max-height: 500px; /* Suficiente para mostrar todo */
+    opacity: 1;
+    padding-bottom: 20px;
   }
 
   .nav-links li {
-    margin: 0;
     width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .nav-links li:first-child {
-    border-top: none;
-  }
-  
-  .nav-links a, .nav-links button {
-    display: block; /* Ocupa todo el ancho del ítem */
+  .nav-links a, 
+  .nav-links button {
     width: 100%;
-    padding: 15px 20px;
-    text-align: left;
+    padding: 15px 25px;
+    justify-content: flex-start; /* Alinear a la izquierda */
+    font-size: 1rem;
     border-radius: 0;
+  }
+
+  .btn-login {
+    margin: 20px 20px 0 20px;
+    width: calc(100% - 40px) !important;
+    text-align: center;
+    justify-content: center !important;
   }
 }

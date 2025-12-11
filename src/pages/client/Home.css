@@ -1,13 +1,26 @@
 /* =========================================
-   1. PANTALLA DE CARGA (LOADER)
+   VARIABLES DE DISEÑO (PALETA DE COLORES)
+   ========================================= */
+:root {
+  --gold-primary: #c5a059;       /* Dorado elegante */
+  --gold-hover: #b08d4b;         /* Dorado oscuro para hover */
+  --dark-bg: #1a1a1a;            /* Fondo oscuro casi negro */
+  --text-dark: #333333;          /* Texto principal */
+  --text-light: #f4f4f4;         /* Texto claro */
+  --bg-light: #ffffff;           /* Fondo blanco puro */
+  --bg-offset: #f9f9f9;          /* Fondo gris muy claro */
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 20px 40px rgba(197, 160, 89, 0.2);
+}
+
+/* =========================================
+   1. PANTALLA DE CARGA (LOADER ELEGANTE)
    ========================================= */
 .loader-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #ffffff;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  background-color: var(--bg-light);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,78 +28,127 @@
   z-index: 9999;
 }
 
-.medical-pulse {
-  width: 50px;
-  height: 50px;
-  background-color: #007bff;
+/* Spinner fino y elegante (Dorado) */
+.aesthetic-spinner {
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(197, 160, 89, 0.2);
+  border-top-color: var(--gold-primary);
   border-radius: 50%;
-  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
 }
 
-.loader-overlay p {
-  margin-top: 15px;
-  color: #007bff;
-  font-weight: 600;
-  font-size: 1.1rem;
+.loader-text {
+  font-family: 'Playfair Display', serif; /* Fuente elegante si está disponible, sino serif */
+  font-size: 1.5rem;
+  color: var(--dark-bg);
+  margin-bottom: 5px;
   letter-spacing: 1px;
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.33); opacity: 1; }
-  80%, 100% { transform: scale(2); opacity: 0; }
+.loader-sub {
+  font-size: 0.9rem;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* =========================================
-   2. ESTILOS PRINCIPALES
+   2. ESTRUCTURA GENERAL
    ========================================= */
-
-/* Forzamos fondo claro para eliminar los fondos oscuros anteriores */
 .home-container {
-  background-color: #f4f7f6; /* Gris muy suave, casi blanco */
-  min-height: 100vh;
+  background-color: var(--bg-light);
   width: 100%;
   overflow-x: hidden;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* HERO SECTION */
+/* =========================================
+   3. HERO SECTION (IMPACTO VISUAL CON IMAGEN)
+   ========================================= */
 .hero-section {
-  background: linear-gradient(135deg, #007bff 0%, #00d2ff 100%);
-  color: white;
-  padding: 120px 20px;
-  text-align: center;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.15);
   position: relative;
+  height: 90vh; /* Casi pantalla completa */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+
+  /* --- INICIO: IMPLEMENTACIÓN DE IMAGEN DE FONDO --- */
+  /* Ruta relativa desde la carpeta CSS hacia la carpeta img */
+  background-image: url('../../img/plastica.png');
+  /* Asegura que la imagen cubra todo el área sin deformarse */
+  background-size: cover;
+  /* Centra la imagen */
+  background-position: center center;
+  /* Evita que se repita si la pantalla es muy grande */
+  background-repeat: no-repeat;
+  /* --- FIN: IMPLEMENTACIÓN DE IMAGEN DE FONDO --- */
+}
+
+/* Superposición oscura para asegurar la legibilidad del texto sobre la imagen */
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  /* Gradiente radial oscuro y transparente */
+  background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
+  z-index: 1;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 2; /* El contenido va sobre el overlay */
   max-width: 900px;
-  margin: 0 auto;
+  padding: 0 20px;
 }
 
-/* --- CORRECCIÓN DEL TÍTULO --- */
-.hero-content h1 {
-  font-size: 3.5rem;
+/* Badge decorativo */
+.badge-specialty {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--gold-primary);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   margin-bottom: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.hero-content h1 {
+  font-family: 'Playfair Display', serif; /* Toque clásico */
+  font-size: 3.5rem;
   line-height: 1.1;
-  font-weight: 800;
-  
-  /* COLOR BLANCO FORZADO */
-  color: #ffffff !important; 
-  
-  /* SOMBRA PARA QUE RESALTE */
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  margin-bottom: 15px;
+  font-weight: 700;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
-.hero-content p {
-  font-size: 1.3rem;
-  margin-bottom: 35px;
-  opacity: 0.95;
-  color: #f0f8ff; /* Blanco ligeramente azulado */
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #e0e0e0;
+  margin-bottom: 10px;
 }
 
-/* BOTONES */
+.hero-description {
+  font-size: 1.1rem;
+  color: #eee; /* Texto un poco más claro para contrastar con la imagen */
+  margin-bottom: 40px;
+  font-style: italic;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* BOTONES PREMIUM */
 .hero-buttons {
   display: flex;
   gap: 20px;
@@ -95,137 +157,177 @@
 }
 
 .btn-hero {
-  padding: 12px 35px;
-  border-radius: 30px;
+  padding: 15px 40px;
   text-decoration: none;
-  font-weight: bold;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Botón Primario (Dorado) */
 .btn-hero.primary {
-  background: white;
-  color: #007bff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.btn-hero.secondary {
-  border: 2px solid white;
+  background-color: var(--gold-primary);
   color: white;
-  background: transparent;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-.btn-hero:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+.btn-hero.primary:hover {
+  background-color: var(--gold-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(197, 160, 89, 0.4);
 }
 
-/* WELCOME SECTION */
+/* Botón Secundario (Transparente) */
+.btn-hero.secondary {
+  background: rgba(255,255,255,0.1); /* Un poco de fondo para contraste */
+  border: 1px solid rgba(255,255,255,0.6);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+.btn-hero.secondary:hover {
+  background: white;
+  color: var(--dark-bg);
+  border-color: white;
+}
+
+/* =========================================
+   4. SECCIÓN BIENVENIDA
+   ========================================= */
 .welcome-section {
-  padding: 80px 20px;
+  padding: 100px 20px;
   text-align: center;
+  background-color: var(--bg-light);
   max-width: 800px;
   margin: 0 auto;
 }
 
+.subtitle {
+  color: var(--gold-primary);
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+
 .welcome-section h2 {
-  font-size: 2.2rem;
-  color: #2c3e50; /* Gris oscuro elegante */
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: var(--text-dark);
   margin-bottom: 20px;
 }
 
+.divider-gold {
+  width: 60px;
+  height: 3px;
+  background-color: var(--gold-primary);
+  margin: 0 auto 30px auto;
+}
+
 .welcome-section p {
-  color: #555;
-  font-size: 1.1rem;
+  color: #666;
+  font-size: 1.15rem;
   line-height: 1.8;
 }
 
-/* CARDS DE SERVICIOS */
+/* =========================================
+   5. CARDS DE SERVICIOS (MINIMALISTAS)
+   ========================================= */
 .features-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
-  padding: 20px 20px 80px;
+  padding: 0 40px 100px;
   max-width: 1200px;
   margin: 0 auto;
+  background-color: var(--bg-light);
 }
 
 .feature-card {
-  background: #ffffff;
-  padding: 40px 25px;
-  border-radius: 20px;
+  background: var(--bg-offset);
+  padding: 50px 30px;
   text-align: center;
-  /* Sombra suave inicial */
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  border: 1px solid #eee;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: 1px solid transparent;
+  position: relative;
 }
 
+/* Efecto hover elegante */
 .feature-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 123, 255, 0.1);
-  border-color: #b3d7ff;
+  background: white;
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(197, 160, 89, 0.3);
 }
 
-.feature-card .icon {
+.card-icon {
   font-size: 3rem;
-  margin-bottom: 15px;
-  display: inline-block;
-  background: #eef7ff;
-  width: 70px;
-  height: 70px;
-  line-height: 70px;
-  border-radius: 50%;
+  margin-bottom: 20px;
+  display: block;
 }
 
 .feature-card h3 {
-  color: #007bff;
-  margin-bottom: 10px;
+  color: var(--text-dark);
+  margin-bottom: 15px;
   font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .feature-card p {
-  color: #666;
+  color: #777;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Tarjeta destacada (central) */
+.feature-card.highlight {
+  border-bottom: 3px solid var(--gold-primary);
 }
 
 /* =========================================
-   3. ANIMACIONES DE ENTRADA
+   6. CTA SECTION
+   ========================================= */
+.cta-section {
+  background-color: var(--bg-offset);
+  padding: 80px 20px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.cta-section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.btn-hero.outline-dark {
+  margin-top: 20px;
+  border: 1px solid var(--text-dark);
+  color: var(--text-dark);
+  display: inline-block;
+  background: transparent;
+}
+
+.btn-hero.outline-dark:hover {
+  background: var(--text-dark);
+  color: white;
+}
+
+/* =========================================
+   7. ANIMACIONES
    ========================================= */
 
-/* Animación de entrada de página */
-.fade-in-page {
-  animation: fadeIn 1s ease-out forwards;
-}
-
-/* Texto del título deslizándose hacia arriba */
-.title-animate {
-  animation: slideUp 0.8s ease-out forwards;
-}
-
-/* Elementos con retraso (delays) */
-.fade-up-delay-1 {
-  opacity: 0;
-  animation: slideUp 0.8s ease-out 0.2s forwards;
-}
-.fade-up-delay-2 {
-  opacity: 0;
-  animation: slideUp 0.8s ease-out 0.4s forwards;
-}
-.fade-up-delay-3 {
-  opacity: 0;
-  animation: slideUp 0.8s ease-out 0.6s forwards;
-}
-
-/* KEYFRAMES */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -233,21 +335,25 @@
   }
 }
 
-/* RESPONSIVE MÓVIL */
-@media (max-width: 600px) {
-  .hero-section {
-    padding: 80px 20px;
-    border-radius: 0 0 30px 30px;
-  }
-  .hero-content h1 {
-    font-size: 2.2rem;
-  }
-  .hero-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-  .btn-hero {
-    width: 100%;
-    box-sizing: border-box;
-  }
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.title-animate {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.fade-up-delay-1 { opacity: 0; animation: fadeInUp 0.8s ease-out 0.4s forwards; }
+.fade-up-delay-2 { opacity: 0; animation: fadeInUp 0.8s ease-out 0.6s forwards; }
+.fade-up-delay-3 { opacity: 0; animation: fadeInUp 0.8s ease-out 0.8s forwards; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-content h1 { font-size: 2.2rem; }
+  .hero-subtitle { font-size: 1.1rem; }
+  .hero-section { height: auto; padding: 120px 20px; min-height: 600px; /* Altura mínima en móvil para ver la imagen */ }
+  .hero-buttons { flex-direction: column; width: 100%; }
+  .btn-hero { width: 100%; display: block; box-sizing: border-box; }
 }

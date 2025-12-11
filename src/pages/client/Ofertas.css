@@ -1,95 +1,105 @@
-/* Variables de Diseño (Coherencia con Admin) */
+/* VARIABLES DE DISEÑO (Black & Gold Theme) */
 :root {
-  --primary-color: #0ea5e9; /* Azul Médico */
-  --primary-dark: #0284c7;
-  --bg-color: #f8fafc;
-  --card-bg: #ffffff;
-  --text-main: #334155;
-  --text-light: #64748b;
+  --gold-primary: #D4AF37;      /* Dorado Clásico */
+  --gold-hover: #AA8C2C;        /* Dorado oscuro */
+  --black-bg: #f9f9f9;          /* Fondo muy claro, casi blanco */
+  --black-card: #ffffff;
+  --black-rich: #1a1a1a;        /* Negro para textos principales y botones */
+  --text-gray: #555;            /* Gris para textos secundarios */
+  --border-gold: #E5C55A;       /* Borde dorado suave */
+  
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
-  --radius: 16px;
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-hover: 0 10px 25px rgba(14, 165, 233, 0.15);
+  
+  --radius: 4px; /* Bordes menos redondeados para mayor elegancia */
+  --shadow-luxury: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* Contenedor General */
 .ofertas-container {
-  padding: 40px 20px;
-  max-width: 1000px;
+  padding: 60px 20px;
+  max-width: 1100px;
   margin: 0 auto;
   min-height: 100vh;
-  background-color: var(--bg-color);
-  font-family: 'Inter', system-ui, sans-serif;
-  color: var(--text-main);
+  background-color: var(--black-bg);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--black-rich);
 }
 
 .ofertas-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 .ofertas-header h1 {
-  color: var(--text-main);
-  font-size: 2.2rem;
-  font-weight: 800;
+  color: var(--black-rich);
+  font-size: 2.5rem;
+  font-weight: 700;
   margin-bottom: 10px;
-  letter-spacing: -0.5px;
-}
-
-.ofertas-header p {
-  color: var(--text-light);
-  font-size: 1.1rem;
-}
-
-/* === FORMULARIO DE RESERVA (Flotante) === */
-.reserva-wrapper {
-  margin-bottom: 50px;
-  display: flex;
-  justify-content: center;
-}
-
-.reserva-card {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: var(--radius);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 550px;
-  border: 1px solid #e2e8f0;
-  position: relative;
-  z-index: 10;
-}
-
-.reserva-header {
-  text-align: center;
-  margin-bottom: 25px;
-  border-bottom: 1px solid #f1f5f9;
-  padding-bottom: 15px;
-}
-
-.reserva-header h3 {
-  margin: 0;
-  color: var(--text-light);
-  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.reserva-servicio {
+.gold-divider-small {
+  width: 60px;
+  height: 3px;
+  background-color: var(--gold-primary);
+  margin: 0 auto 15px;
+}
+
+.ofertas-header p {
+  color: var(--text-gray);
+  font-size: 1.1rem;
+}
+
+/* === FORMULARIO DE RESERVA (Diseño Luxury) === */
+.reserva-wrapper {
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.reserva-card-luxury {
+  background: var(--black-card);
+  padding: 40px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-luxury);
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid var(--border-gold);
+  position: relative;
+  z-index: 10;
+}
+
+.reserva-header-luxury {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.reserva-header-luxury h3 {
+  margin: 0;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.reserva-servicio-gold {
   display: block;
-  color: var(--primary-color);
-  font-weight: 800;
-  font-size: 1.5rem;
-  margin-top: 5px;
+  color: var(--black-rich);
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-top: 10px;
 }
 
 .reserva-form .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 25px;
+  gap: 25px;
+  margin-bottom: 30px;
 }
 
 .form-group label {
@@ -97,24 +107,25 @@
   margin-bottom: 8px;
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--text-main);
+  color: var(--black-rich);
 }
 
-.form-group input {
+.input-luxury {
   width: 100%;
   padding: 12px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 1rem;
-  transition: all 0.2s;
+  transition: all 0.3s;
   box-sizing: border-box;
-  color: var(--text-main);
+  color: var(--black-rich);
+  background-color: #fff;
 }
 
-.form-group input:focus {
-  border-color: var(--primary-color);
+.input-luxury:focus {
+  border-color: var(--gold-primary);
   outline: none;
-  background-color: #f0f9ff;
+  box-shadow: 0 0 0 1px var(--gold-primary);
 }
 
 .botones-reserva {
@@ -123,92 +134,101 @@
   gap: 15px;
 }
 
-.btn-confirmar, .btn-cancelar {
-  padding: 12px 25px;
+.btn-confirmar-luxury {
+  padding: 12px 30px;
   border: none;
-  border-radius: 10px;
+  border-radius: 2px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+  background-color: var(--black-rich);
+  color: var(--gold-primary); /* Texto dorado sobre negro */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-confirmar-luxury:hover {
+  background-color: var(--gold-primary);
+  color: var(--black-rich);
+}
+
+.btn-cancelar-luxury {
+  padding: 12px 25px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s;
   font-size: 0.95rem;
+  background-color: transparent;
+  color: var(--text-gray);
 }
 
-.btn-confirmar {
-  background-color: var(--success-color);
-  color: white;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+.btn-cancelar-luxury:hover {
+  border-color: var(--black-rich);
+  color: var(--black-rich);
 }
 
-.btn-confirmar:hover {
-  background-color: #059669;
-  transform: translateY(-2px);
-}
-
-.btn-cancelar {
-  background-color: #f1f5f9;
-  color: var(--text-light);
-}
-
-.btn-cancelar:hover {
-  background-color: #e2e8f0;
-}
-
-/* === GRID DE SERVICIOS === */
+/* === GRID DE SERVICIOS (Luxury Style) === */
 .servicios-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
 }
 
-.card-servicio {
-  background: var(--card-bg);
+.card-servicio-luxury {
+  background: var(--black-card);
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
-  border: 1px solid #f1f5f9;
+  border: 1px solid #eee;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
-.card-servicio:hover {
+.card-servicio-luxury:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--primary-color);
+  box-shadow: var(--shadow-luxury);
+  border-color: var(--gold-primary);
 }
 
-.card-icon-bg {
-  background: #f0f9ff;
-  padding: 20px;
+.card-icon-luxury {
+  background: var(--black-rich); /* Fondo negro para el icono */
+  padding: 25px;
   text-align: center;
-  border-bottom: 1px solid #f1f5f9;
 }
 
-.card-icon {
+.card-icon-gold {
   font-size: 2.5rem;
+  /* Podrías usar un filtro para dorar el emoji si quisieras, pero el emoji normal está bien */
 }
 
 .card-content {
-  padding: 20px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.card-servicio h3 {
-  color: var(--text-main);
-  font-size: 1.2rem;
+.card-servicio-luxury h3 {
+  color: var(--black-rich);
+  font-size: 1.3rem;
   margin: 0 0 15px 0;
   font-weight: 700;
+  text-transform: uppercase;
 }
 
-.card-details {
+.card-details-luxury {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
-  background: #f8fafc;
-  padding: 10px;
-  border-radius: 8px;
+  margin-bottom: 25px;
+  background: #fdfdfd;
+  padding: 15px;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
 }
 
 .detail-item {
@@ -219,80 +239,90 @@
 
 .detail-item .label {
   font-size: 0.75rem;
-  color: var(--text-light);
+  color: var(--text-gray);
   text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
 }
 
-.detail-item .value {
+.value-gold {
+  color: var(--gold-primary);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
 }
 
-.value.precio { color: var(--success-color); }
-.value.duracion { color: var(--primary-color); }
+.value-text {
+  color: var(--black-rich);
+  font-weight: 700;
+  font-size: 1rem;
+}
 
-.btn-agendar {
+.btn-agendar-luxury {
   width: 100%;
-  padding: 12px;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  padding: 14px;
+  background-color: var(--black-rich);
+  color: var(--gold-primary);
+  border: 1px solid var(--black-rich);
+  border-radius: 2px;
+  font-weight: 700;
   cursor: pointer;
   margin-top: auto;
-  transition: background 0.3s;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.btn-agendar:hover {
-  background-color: var(--primary-dark);
+.btn-agendar-luxury:hover {
+  background-color: var(--gold-primary);
+  color: var(--black-rich);
+  border-color: var(--gold-primary);
 }
 
 /* === SECCIÓN MIS CITAS === */
 .mis-citas-section {
-  margin-top: 60px;
+  margin-top: 80px;
 }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
+.section-header-luxury {
+  margin-bottom: 30px;
+  border-left: 4px solid var(--gold-primary);
+  padding-left: 15px;
 }
 
-.section-header h2 {
-  color: var(--text-main);
-  font-size: 1.5rem;
+.section-header-luxury h2 {
+  color: var(--black-rich);
+  font-size: 1.8rem;
   margin: 0;
+  font-weight: 700;
 }
 
-/* Grid de citas del usuario */
+/* Grid de citas */
 .citas-user-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
 }
 
-.cita-user-card {
+.cita-user-card-luxury {
   background: white;
-  border: 1px solid #e2e8f0;
-  padding: 20px;
+  border: 1px solid #eee;
+  padding: 25px;
   border-radius: var(--radius);
-  position: relative;
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
 
-.cita-user-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+.cita-user-card-luxury:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
 
-/* Colores de borde superior según estado */
-.status-pendiente { border-top: 4px solid var(--warning-color); }
-.status-confirmada { border-top: 4px solid var(--success-color); }
-.status-cancelada { border-top: 4px solid var(--danger-color); opacity: 0.8; }
+/* Bordes de estado */
+.status-pendiente { border-left: 4px solid var(--gold-primary); }
+.status-confirmada { border-left: 4px solid var(--black-rich); }
+.status-cancelada { border-left: 4px solid #ccc; opacity: 0.7; }
 
 .cita-header-card {
   display: flex;
@@ -303,92 +333,92 @@
 }
 
 .cita-fecha {
-  color: var(--text-light);
-  font-weight: 500;
+  color: var(--text-gray);
+  font-weight: 600;
 }
 
-.status-badge {
+.status-badge-luxury {
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  letter-spacing: 0.5px;
 }
 
-.badge-pendiente { background-color: #fffbeb; color: #b45309; border: 1px solid #fcd34d; }
-.badge-confirmada { background-color: #ecfdf5; color: #047857; border: 1px solid #6ee7b7; }
-.badge-cancelada { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
+.badge-pendiente { background-color: #fff9db; color: #856404; border: 1px solid #ffeeba; }
+.badge-confirmada { background-color: #1a1a1a; color: #D4AF37; } /* Negro y dorado */
+.badge-cancelada { background-color: #f8f9fa; color: #6c757d; border: 1px solid #ddd; }
 
 .cita-servicio-name {
-  margin: 0 0 5px 0;
-  color: var(--text-main);
-  font-size: 1.15rem;
+  margin: 0 0 8px 0;
+  color: var(--black-rich);
+  font-size: 1.2rem;
   font-weight: 700;
 }
 
 .cita-hora {
   margin: 0;
-  color: var(--text-light);
-  font-size: 0.95rem;
+  color: var(--text-gray);
+  font-size: 1rem;
 }
 
-/* FOOTER ESPECÍFICO: Pendiente */
-.cita-footer-pendiente {
-  margin-top: 15px;
-  background-color: #fffbeb;
-  color: #b45309;
-  padding: 10px;
-  border-radius: 8px;
+/* Footer Pendiente */
+.cita-footer-pendiente-luxury {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px dashed #ddd;
+  color: #856404;
   font-size: 0.85rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px dashed #fcd34d;
 }
 
-/* Animación del punto pulsante */
-.pulse-dot {
+.pulse-dot-gold {
   width: 8px;
   height: 8px;
-  background-color: #f59e0b;
+  background-color: var(--gold-primary);
   border-radius: 50%;
-  box-shadow: 0 0 0 rgba(245, 158, 11, 0.4);
-  animation: pulse-yellow 2s infinite;
+  animation: pulse-gold 2s infinite;
 }
 
-@keyframes pulse-yellow {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+@keyframes pulse-gold {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(212, 175, 55, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
 }
 
-/* Footer confirmado */
-.cita-footer-confirmada {
-  margin-top: 15px;
-  color: var(--success-color);
+/* Footer Confirmada */
+.cita-footer-confirmada-luxury {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  color: var(--black-rich);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
+  text-transform: uppercase;
 }
 
 /* Empty State */
-.no-citas {
+.no-citas-luxury {
   text-align: center;
-  padding: 60px;
-  color: var(--text-light);
+  padding: 80px;
+  color: var(--text-gray);
   background: white;
+  border: 1px dashed var(--gold-primary);
   border-radius: var(--radius);
-  border: 2px dashed #e2e8f0;
 }
 
-.icon-empty {
+.icon-empty-gold {
   font-size: 3rem;
-  margin-bottom: 10px;
-  opacity: 0.5;
+  margin-bottom: 15px;
+  opacity: 0.6;
 }
 
 /* === LOADING & SPINNERS === */
@@ -398,25 +428,25 @@
   justify-content: center;
   align-items: center;
   height: 60vh;
-  color: var(--primary-color);
+  color: var(--black-rich);
 }
 
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e0f2fe;
-  border-top: 4px solid var(--primary-color);
+.spinner-gold {
+  width: 45px;
+  height: 45px;
+  border: 3px solid rgba(0,0,0,0.1);
+  border-top: 3px solid var(--gold-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .spinner-mini {
   display: inline-block;
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top: 2px solid white;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-top: 2px solid var(--gold-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -434,7 +464,7 @@
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes popIn { 
-  from { opacity: 0; transform: scale(0.9) translateY(20px); } 
+  from { opacity: 0; transform: scale(0.95) translateY(15px); } 
   to { opacity: 1; transform: scale(1) translateY(0); } 
 }
 @keyframes slideUp { 
@@ -445,6 +475,6 @@
 /* Responsive */
 @media (max-width: 600px) {
   .reserva-form .form-row { grid-template-columns: 1fr; gap: 15px; }
-  .ofertas-header h1 { font-size: 1.8rem; }
-  .mis-citas-section { margin-top: 40px; }
+  .ofertas-header h1 { font-size: 2rem; }
+  .mis-citas-section { margin-top: 50px; }
 }

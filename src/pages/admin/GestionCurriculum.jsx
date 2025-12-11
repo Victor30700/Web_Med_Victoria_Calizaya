@@ -80,7 +80,7 @@ export default function GestionCurriculum() {
 
   return (
     <div className="admin-container">
-      <h1>🎓 Gestión de Perfil Profesional</h1>
+  
       <p>Actualiza tu información, foto y el enlace a tu CV.</p>
 
       <section className="card-admin">

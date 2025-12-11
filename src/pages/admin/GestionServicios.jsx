@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { db } from "../../firebase/config";
 import { collection, getDocs, addDoc, deleteDoc, doc, setDoc, getDoc } from "firebase/firestore";
-import Swal from "sweetalert2"; // Importamos SweetAlert2
+import Swal from "sweetalert2"; 
+// Importamos los iconos modernos
+import { 
+  Clock, Save, PlusCircle, Trash2, DollarSign, 
+  Timer, Settings, Sparkles 
+} from "lucide-react";
 import "./GestionServicios.css";
 
 export default function GestionServicios() {
@@ -39,7 +44,7 @@ export default function GestionServicios() {
         icon: 'warning',
         title: 'Campos incompletos',
         text: 'Por favor ingresa el nombre y el precio del servicio.',
-        confirmButtonColor: '#0ea5e9'
+        confirmButtonColor: '#c5a059'
       });
     }
 
@@ -72,8 +77,8 @@ export default function GestionServicios() {
       text: "Esta acción no se puede deshacer.",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#ef4444', // Rojo alerta
-      cancelButtonColor: '#64748b', // Gris cancelar
+      confirmButtonColor: '#e74c3c', // Rojo elegante
+      cancelButtonColor: '#7f8c8d', 
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
     });
@@ -101,7 +106,7 @@ export default function GestionServicios() {
         icon: 'success',
         title: 'Horario Actualizado',
         text: 'La configuración de atención ha sido guardada.',
-        confirmButtonColor: '#0ea5e9'
+        confirmButtonColor: '#c5a059'
       });
     } catch (error) {
       console.error("Error al guardar horario:", error);
@@ -109,7 +114,12 @@ export default function GestionServicios() {
     }
   };
 
-  if (loading) return <div className="loading-container"><div className="spinner"></div>Cargando panel...</div>;
+  if (loading) return (
+    <div className="loading-container">
+      <div className="spinner-gold"></div>
+      <p>Cargando panel...</p>
+    </div>
+  );
 
   return (
     <div className="admin-container">
@@ -121,12 +131,12 @@ export default function GestionServicios() {
       {/* SECCIÓN 1: CONFIGURAR HORARIO */}
       <section className="card-admin section-horario fade-in-up delay-1">
         <div className="card-header">
-          <h2>🕒 Configuración de Horario</h2>
+          <h2><Settings size={22} className="icon-gold" /> Configuración de Horario</h2>
         </div>
         <div className="card-body">
           <div className="form-horario">
             <div className="input-group">
-              <label>Hora de Apertura</label>
+              <label><Clock size={16} /> Apertura</label>
               <input 
                 type="time" 
                 value={horario.entrada} 
@@ -134,15 +144,15 @@ export default function GestionServicios() {
               />
             </div>
             <div className="input-group">
-              <label>Hora de Cierre</label>
+              <label><Clock size={16} /> Cierre</label>
               <input 
                 type="time" 
                 value={horario.salida} 
                 onChange={e => setHorario({ ...horario, salida: e.target.value })} 
               />
             </div>
-            <button onClick={guardarHorario} className="btn-save">
-              Actualizar Horario
+            <button onClick={guardarHorario} className="btn-gold">
+              <Save size={18} /> Actualizar Horario
             </button>
           </div>
         </div>
@@ -151,58 +161,96 @@ export default function GestionServicios() {
       {/* SECCIÓN 2: AGREGAR SERVICIOS */}
       <section className="card-admin section-agregar fade-in-up delay-2">
         <div className="card-header">
-          <h2>➕ Agregar Nuevo Servicio</h2>
+          <h2><PlusCircle size={22} className="icon-gold" /> Agregar Nuevo Servicio</h2>
         </div>
         <div className="card-body">
           <form onSubmit={agregarServicio} className="form-servicio">
-            <input
-              type="text"
-              className="input-text"
-              placeholder="Nombre del servicio (ej. Consulta General)"
-              value={nuevoServicio.nombre}
-              onChange={e => setNuevoServicio({ ...nuevoServicio, nombre: e.target.value })}
-            />
-            <div className="row-inputs">
-              <input
-                type="number"
-                className="input-number"
-                placeholder="Costo (Bs)"
-                value={nuevoServicio.precio}
-                onChange={e => setNuevoServicio({ ...nuevoServicio, precio: e.target.value })}
-              />
-              <select
-                className="input-select"
-                value={nuevoServicio.duracion}
-                onChange={e => setNuevoServicio({ ...nuevoServicio, duracion: e.target.value })}
-              >
-                <option value="15">15 min</option>
-                <option value="30">30 min</option>
-                <option value="60">1 hora</option>
-              </select>
+            <div className="form-row full-width">
+              <label>Nombre del Servicio</label>
+              <div className="input-icon-wrapper">
+                <Sparkles size={18} className="input-icon" />
+                <input
+                  type="text"
+                  className="input-admin"
+                  placeholder="Ej. Consulta Estética General"
+                  value={nuevoServicio.nombre}
+                  onChange={e => setNuevoServicio({ ...nuevoServicio, nombre: e.target.value })}
+                />
+              </div>
             </div>
-            <button type="submit" className="btn-add">Agregar Servicio</button>
+            
+            <div className="row-inputs">
+              <div className="input-group">
+                <label>Costo (Bs)</label>
+                <div className="input-icon-wrapper">
+                  <DollarSign size={18} className="input-icon" />
+                  <input
+                    type="number"
+                    className="input-admin"
+                    placeholder="0.00"
+                    value={nuevoServicio.precio}
+                    onChange={e => setNuevoServicio({ ...nuevoServicio, precio: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="input-group">
+                <label>Duración Estimada</label>
+                <div className="input-icon-wrapper">
+                  <Timer size={18} className="input-icon" />
+                  <select
+                    className="input-admin"
+                    value={nuevoServicio.duracion}
+                    onChange={e => setNuevoServicio({ ...nuevoServicio, duracion: e.target.value })}
+                  >
+                    <option value="15">15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="45">45 min</option>
+                    <option value="60">1 hora</option>
+                    <option value="90">1 hora 30 min</option>
+                    <option value="120">2 horas</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button type="submit" className="btn-dark-gold">
+              Agregar al Catálogo
+            </button>
           </form>
         </div>
       </section>
 
       {/* SECCIÓN 3: LISTA DE SERVICIOS */}
       <section className="lista-servicios fade-in-up delay-3">
-        <h2>📋 Servicios Activos</h2>
+        <div className="section-title-wrapper">
+          <h2>Catálogo de Servicios</h2>
+          <span className="badge-count">{servicios.length} Activos</span>
+        </div>
+        
         {servicios.length === 0 ? (
-          <div className="empty-state">No hay servicios registrados actualmente.</div>
+          <div className="empty-state">
+            <Sparkles size={40} className="icon-empty" />
+            <p>No hay servicios registrados en el catálogo.</p>
+          </div>
         ) : (
           <div className="grid-servicios">
             {servicios.map((servicio) => (
               <div key={servicio.id} className="servicio-item scale-in">
-                <div className="servicio-info">
-                  <h3>{servicio.nombre}</h3>
-                  <div className="servicio-detalles">
-                    <span className="tag-precio">{servicio.precio} Bs</span>
-                    <span className="tag-duracion">⏱ {servicio.duracion} min</span>
+                <div className="servicio-content">
+                  <div className="servicio-header">
+                    <h3>{servicio.nombre}</h3>
+                  </div>
+                  <div className="servicio-meta">
+                    <span className="tag-precio">
+                      <DollarSign size={14} /> {servicio.precio} Bs
+                    </span>
+                    <span className="tag-duracion">
+                      <Timer size={14} /> {servicio.duracion} min
+                    </span>
                   </div>
                 </div>
-                <button onClick={() => eliminarServicio(servicio.id)} className="btn-delete">
-                  Eliminar
+                <button onClick={() => eliminarServicio(servicio.id)} className="btn-delete-icon" title="Eliminar servicio">
+                  <Trash2 size={18} />
                 </button>
               </div>
             ))}

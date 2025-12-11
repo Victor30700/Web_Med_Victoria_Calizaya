@@ -1,96 +1,161 @@
-.ubicacion-container {
-  padding: 40px 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-  min-height: 80vh; /* Para que ocupe buena parte de la pantalla */
+/* VARIABLES DE DISEÑO (Black & Gold Theme) */
+:root {
+  --gold-primary: #D4AF37;      /* Dorado Clásico */
+  --gold-hover: #AA8C2C;        /* Dorado oscuro */
+  --black-bg: #f9f9f9;          /* Fondo Claro */
+  --black-card: #ffffff;        /* Fondo Tarjeta */
+  --black-rich: #1a1a1a;        /* Negro Intenso */
+  --text-gray: #555;            /* Gris texto */
+  --radius: 4px;                /* Bordes elegantes */
+  --shadow-luxury: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
 
-/* Tarjeta Principal */
-.location-card {
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra elegante */
-  padding: 40px;
+.ubicacion-container {
+  padding: 80px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 80vh; 
+  background-color: var(--black-bg);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Tarjeta Principal Luxury */
+.location-card-luxury {
+  background: var(--black-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-luxury);
+  padding: 50px;
   text-align: center;
+  border-top: 5px solid var(--gold-primary); /* Detalle superior dorado */
 }
 
 .location-header h1 {
-  color: #2c3e50;
-  font-size: 2.2rem;
-  margin-bottom: 10px;
+  color: var(--black-rich);
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.gold-divider-small {
+  width: 60px;
+  height: 3px;
+  background-color: var(--gold-primary);
+  margin: 0 auto 20px;
 }
 
 .location-header p {
-  color: #7f8c8d;
+  color: var(--text-gray);
   font-size: 1.1rem;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 /* Contenedor del Mapa */
-.map-wrapper {
+.map-wrapper-luxury {
   height: 450px;
-  border-radius: 12px;
+  border-radius: var(--radius);
   overflow: hidden;
-  border: 4px solid #fff;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  margin-bottom: 25px;
+  border: 1px solid #ddd; /* Borde sutil */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
 }
 
 /* Pie del mapa con botón */
-.map-footer {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #eee;
+.map-footer-luxury {
+  background: #fff;
+  padding: 30px;
+  border-top: 1px solid #eee;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
-.map-footer p {
+.map-footer-luxury p {
   margin: 0;
   font-weight: 600;
-  color: #333;
+  color: var(--black-rich);
+  font-size: 1.1rem;
 }
 
-.btn-google-maps {
+.btn-google-maps-luxury {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: #4285F4; /* Azul oficial de Google Maps */
-  color: white;
-  padding: 12px 30px;
+  gap: 10px;
+  background: var(--black-rich); /* Fondo Negro */
+  color: var(--gold-primary);     /* Texto Dorado */
+  padding: 14px 35px;
   text-decoration: none;
-  border-radius: 50px; /* Botón píldora */
-  font-weight: bold;
+  border-radius: 2px; /* Botón más cuadrado y elegante */
+  font-weight: 700;
   font-size: 1rem;
-  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 6px rgba(66, 133, 244, 0.3);
+  transition: all 0.3s ease;
+  border: 1px solid var(--black-rich);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.btn-google-maps:hover {
-  background: #3367d6;
+.btn-google-maps-luxury:hover {
+  background: var(--gold-primary); /* Fondo Dorado al hover */
+  color: var(--black-rich);        /* Texto Negro al hover */
+  border-color: var(--gold-primary);
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(66, 133, 244, 0.4);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 /* Estado Vacío */
-.no-map {
-  background: #fff3cd;
-  color: #856404;
-  padding: 30px;
-  border-radius: 10px;
-  border: 1px solid #ffeeba;
-  font-weight: bold;
+.no-map-luxury {
+  background: #fff;
+  color: var(--text-gray);
+  padding: 40px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--gold-primary);
+  font-weight: 500;
+}
+
+/* LOADING */
+.loading-location {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  color: var(--black-rich);
+}
+
+.spinner-gold {
+  width: 45px;
+  height: 45px;
+  border: 3px solid rgba(0,0,0,0.1);
+  border-top: 3px solid var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ANIMACIONES */
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.slide-up { opacity: 0; animation: slideUp 0.6s ease-out forwards; }
+.delay-1 { animation-delay: 0.3s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { 
+  from { opacity: 0; transform: translateY(30px); } 
+  to { opacity: 1; transform: translateY(0); } 
 }
 
 /* Adaptabilidad Móvil */
 @media (max-width: 768px) {
-  .location-card {
-    padding: 20px;
+  .location-card-luxury {
+    padding: 30px 20px;
   }
-  .map-wrapper {
+  .map-wrapper-luxury {
     height: 350px;
   }
   .location-header h1 {

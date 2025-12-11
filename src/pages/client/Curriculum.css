@@ -1,232 +1,271 @@
+/* VARIABLES DE DISEÑO (Black & Gold Theme) */
+:root {
+  --gold-primary: #D4AF37;      /* Dorado Clásico */
+  --gold-light: #F3E5AB;        /* Dorado muy claro para fondos */
+  --gold-dark: #AA8C2C;         /* Dorado oscuro para bordes/hover */
+  --black-rich: #1a1a1a;        /* Negro suave */
+  --black-pure: #000000;        /* Negro puro */
+  --gray-text: #4a4a4a;         /* Gris oscuro para lectura */
+  --white: #ffffff;
+}
+
 /* Contenedor Principal */
 .cv-container {
-  padding: 60px 20px;
-  max-width: 900px;
+  padding: 80px 20px;
+  max-width: 950px;
   margin: 0 auto;
-  min-height: 90vh;
-  background-color: #f8f9fa; /* Fondo gris muy suave */
+  min-height: 100vh;
+  background-color: #fcfcfc; /* Fondo casi blanco */
 }
 
-/* Tarjeta del CV */
+/* Tarjeta Principal del CV */
 .cv-card {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0, 123, 255, 0.1); /* Sombra azulada suave */
-  padding: 60px;
+  background: var(--white);
+  border-radius: 4px; /* Bordes más rectos para elegancia */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  padding: 0 0 60px 0;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.02);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Decoración superior (barra de color) */
-.cv-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Decoración Superior (Negro con línea Dorada) */
+.cv-luxury-header {
+  height: 160px;
   width: 100%;
-  height: 8px;
-  background: linear-gradient(90deg, #007bff, #00d2ff);
+  background-color: var(--black-rich);
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.gold-line {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  margin-bottom: 20px; /* Separación visual */
 }
 
 /* --- HEADER Y FOTO --- */
-.cv-header {
+.cv-header-content {
   text-align: center;
-  margin-bottom: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-top: -100px; /* Sube la foto sobre el fondo negro */
+  padding: 0 20px 30px;
+  position: relative;
+  z-index: 2;
 }
 
-/* Encapsulado de la Foto */
-.profile-image-wrapper {
-  width: 180px;
-  height: 180px;
+/* Foto de Perfil */
+.profile-gold-wrapper {
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  padding: 5px; /* Espacio para el borde doble */
-  background: white;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  margin-bottom: 25px;
-  border: 3px solid #e3f2fd; /* Borde azul muy claro */
-  transition: transform 0.3s ease;
-}
-
-.profile-image-wrapper:hover {
-  transform: scale(1.05);
-  border-color: #007bff;
+  padding: 5px;
+  background: var(--white); /* Borde blanco separador */
+  margin: 0 auto 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  position: relative;
+  /* Doble borde simulado */
+  border: 1px solid var(--gold-light); 
 }
 
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Asegura que la foto llene el círculo sin deformarse */
+  object-fit: cover;
   border-radius: 50%;
-  background-color: #f0f0f0; /* Fondo mientras carga */
+  border: 3px solid var(--gold-primary); /* Borde dorado interno */
 }
 
+/* Textos */
 .header-text h1 {
-  color: #2c3e50;
-  font-size: 2.8rem;
+  color: var(--black-rich);
+  font-size: 2.6rem;
   margin-bottom: 10px;
-  font-weight: 700;
+  font-weight: 700; /* Fuente clásica serif podría quedar bien aquí, pero mantenemos la por defecto */
   letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+.gold-divider-small {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: var(--gold-primary);
+  margin: 15px auto;
 }
 
 .subtitle {
-  color: #007bff;
-  font-size: 1.3rem;
-  font-weight: 500;
+  color: var(--gold-dark);
+  font-size: 1.1rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
-.divider {
-  width: 60px;
-  height: 4px;
-  background-color: #e0e0e0;
-  margin: 20px auto 0;
-  border-radius: 2px;
-}
-
-/* --- SECCIONES DE TEXTO --- */
+/* --- CUERPO --- */
 .cv-body {
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 30px;
 }
 
 .cv-section {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
-.cv-section h3 {
-  color: #34495e;
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+.section-title {
+  color: var(--black-rich);
+  font-size: 1.6rem;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 2px solid #f1f1f1;
+  font-weight: 700;
+  border-bottom: 1px solid #eee;
   padding-bottom: 10px;
 }
 
-.cv-section .icon {
-  font-size: 1.8rem;
+.icon-gold {
+  font-size: 1.5rem;
+  /* Filtro o color directo */
+  color: var(--gold-primary); 
 }
 
 .cv-section p {
-  color: #555;
-  line-height: 1.8;
-  font-size: 1.1rem;
-  white-space: pre-wrap;
+  color: var(--gray-text);
+  line-height: 1.9;
+  font-size: 1.05rem;
   text-align: justify;
+}
+
+/* --- GRID MISIÓN Y VISIÓN (Estilo Tarjetas Negras/Doradas) --- */
+.mision-vision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 50px;
+}
+
+.mv-card-luxury {
+  background: var(--white);
+  padding: 35px 25px;
+  border: 1px solid var(--gold-light);
+  border-radius: 2px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mv-card-luxury:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-primary);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.mv-card-luxury h3 {
+  color: var(--black-rich);
+  font-size: 1.3rem;
+  margin: 10px 0;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.mv-icon-gold {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* --- EXPERIENCIA (Caja resaltada) --- */
+.experience-box-gold {
+  background-color: #fffcf5; /* Crema muy suave */
+  border-left: 4px solid var(--gold-primary);
+  padding: 25px;
+  font-style: italic;
+  color: #555;
 }
 
 /* --- FOOTER Y BOTÓN --- */
 .cv-footer {
-  margin-top: 50px;
   text-align: center;
+  margin-top: 50px;
 }
 
-.btn-download-cv {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
-  color: white;
-  padding: 15px 35px;
+.btn-download-gold {
+  display: inline-block;
+  background-color: var(--black-rich);
+  color: var(--gold-primary);
+  padding: 15px 40px;
   text-decoration: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid var(--black-rich);
   transition: all 0.3s ease;
 }
 
-.btn-download-cv:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
-  filter: brightness(1.1);
+.btn-download-gold:hover {
+  background-color: var(--white);
+  color: var(--black-rich);
+  border-color: var(--black-rich);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* --- LOADING --- */
+/* --- LOADING & EMPTY STATES --- */
 .loading-cv {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
-  color: #666;
-  font-size: 1.2rem;
+  min-height: 70vh;
+  color: var(--black-rich);
 }
 
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #007bff;
+.spinner-gold {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0,0,0,0.1);
+  border-top: 3px solid var(--gold-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 20px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.cv-card.empty {
+  text-align: center;
+  padding: 100px 20px;
+  border: 1px dashed var(--gold-primary);
+}
+
+.empty-icon-gold {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  display: block;
+  opacity: 0.5;
 }
 
 /* --- ANIMACIONES --- */
-.fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.pop-in { opacity: 0; transform: scale(0.9); animation: popIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.slide-up { opacity: 0; transform: translateY(30px); animation: slideUp 0.8s ease-out forwards; }
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
 
-.pop-in {
-  opacity: 0;
-  transform: scale(0.8);
-  animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation-delay: 0.2s;
-}
-
-.slide-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: slideUp 0.8s ease-out forwards;
-}
-
-.delay-1 { animation-delay: 0.3s; }
-.delay-2 { animation-delay: 0.5s; }
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-@keyframes popIn {
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes slideUp {
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes popIn { to { opacity: 1; transform: scale(1); } }
+@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-  .cv-card {
-    padding: 30px 20px;
-  }
-  
-  .profile-image-wrapper {
-    width: 140px;
-    height: 140px;
-  }
-
-  .header-text h1 {
-    font-size: 2rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
-  }
-
-  .cv-section h3 {
-    font-size: 1.3rem;
-  }
+  .cv-card { padding-bottom: 40px; }
+  .cv-luxury-header { height: 120px; }
+  .profile-gold-wrapper { width: 150px; height: 150px; margin-top: 0; }
+  .header-text h1 { font-size: 1.8rem; }
+  .mision-vision-grid { grid-template-columns: 1fr; gap: 20px; }
+  .btn-download-gold { width: 100%; box-sizing: border-box; }
 }

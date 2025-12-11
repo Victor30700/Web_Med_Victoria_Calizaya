@@ -1,14 +1,337 @@
-.form-section { background: white; border: 1px solid #ddd; }
-.input-titulo { width: 100%; padding: 10px; font-size: 1.1rem; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
-.textarea-contenido { width: 100%; padding: 10px; font-family: inherit; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; resize: vertical; }
-.btn-publicar { background: #007bff; color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer; transition: 0.3s; }
-.btn-publicar:hover { background: #0056b3; }
+/* =========================================
+   VARIABLES Y ESTILOS BASE (Admin Theme)
+   ========================================= */
+:root {
+    --admin-primary: #00a896; /* Teal */
+    --admin-secondary: #e63946; /* Coral */
+    --admin-bg: #f4f7f6;
+    --admin-text: #2c3e50;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
 
-.grid-articulos { display: grid; gap: 15px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-.articulo-admin-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #28a745; display: flex; flex-direction: column; justify-content: space-between; }
-.articulo-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.articulo-header h3 { margin: 0; font-size: 1.1rem; color: #333; }
-.fecha-tag { font-size: 0.8rem; color: #888; background: #eee; padding: 2px 6px; border-radius: 4px; }
-.articulo-preview { color: #666; font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
-.btn-delete-art { align-self: flex-end; background: #fff; color: #dc3545; border: 1px solid #dc3545; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-.btn-delete-art:hover { background: #dc3545; color: white; }
+.admin-container {
+    padding: 30px;
+    background-color: var(--admin-bg);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* HEADER DEL DASHBOARD */
+.admin-header {
+    margin-bottom: 35px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+}
+
+.admin-header h1 {
+    font-size: 2.2rem;
+    color: var(--admin-text);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.admin-header p {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.admin-content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+
+/* =========================================
+   FORMULARIO DE PUBLICACIÓN
+   ========================================= */
+.card-admin {
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.card-header {
+    background: linear-gradient(to right, #f8f9fa, #ffffff);
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--admin-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.admin-form .form-group {
+    margin-bottom: 20px;
+}
+
+.admin-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+.input-modern,
+.textarea-modern {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #fcfcfc;
+    font-family: inherit;
+}
+
+.input-modern:focus,
+.textarea-modern:focus {
+    border-color: var(--admin-primary);
+    background-color: white;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.15);
+}
+
+.textarea-modern {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.btn-primary-admin {
+    background: var(--admin-primary);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 168, 150, 0.2);
+}
+
+.btn-primary-admin:hover {
+    background: #008c7d;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 168, 150, 0.3);
+}
+
+/* =========================================
+   LISTADO DE ARTÍCULOS
+   ========================================= */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    color: var(--admin-text);
+    margin: 0;
+}
+
+.badge-count {
+    background: #e9ecef;
+    color: #495057;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Grid Layout */
+.grid-articulos {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* Card de Artículo */
+.articulo-admin-card {
+    background: white;
+    border-radius: 12px;
+    padding: 0; /* Padding gestionado por hijos */
+    box-shadow: var(--card-shadow);
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Borde izquierdo de color para destacar */
+.articulo-admin-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--admin-primary);
+}
+
+.articulo-admin-card.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+.articulo-top-bar {
+    padding: 15px 20px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fecha-badge {
+    font-size: 0.75rem;
+    color: #888;
+    background: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.articulo-content {
+    padding: 15px 20px;
+    flex-grow: 1;
+}
+
+.articulo-content h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+    color: #333;
+    line-height: 1.3;
+}
+
+.articulo-preview {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.articulo-actions {
+    padding: 15px 20px;
+    background: #fdfdfd;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-delete-icon {
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #f8d7da;
+    background-color: #fff5f5;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-delete-icon:hover {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    background: #fff;
+    border-radius: 12px;
+    border: 2px dashed #e0e0e0;
+    color: #888;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+/* Loading Spinner */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    color: var(--admin-primary);
+}
+
+.spinner {
+    border: 4px solid rgba(0, 168, 150, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-left-color: var(--admin-primary);
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 15px;
+    }
+    
+    .grid-articulos {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-header, .card-body {
+        padding: 15px;
+    }
+}
